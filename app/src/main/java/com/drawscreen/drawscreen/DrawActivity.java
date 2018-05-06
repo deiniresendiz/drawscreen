@@ -120,40 +120,32 @@ public class DrawActivity extends AppCompatActivity {
     public class MyCanva extends View {
         public Paint brush = new Paint();
         public Path path = new Path();
-        private float x = 10;
-        private float y = 10;
         private String Accion = "accion";
         private int sizeBrush, colorBrush;
         public MyCanva(Context context) {
             super(context);
             sizeBrush(1);
             colors(0);
+            brush.setStyle(Paint.Style.STROKE);
         }
 
         @Override
         protected void onDraw(Canvas canvas) {
-            super.onDraw(canvas);
             canvas.drawRGB(255,255,255);
-            brush.setStyle(Paint.Style.STROKE);
-
-            if(Accion.equals("Down")){
-                path.moveTo(x,y);
-            }
-            if(Accion.equals("Move")){
-                path.lineTo(x,y);
-            }
             canvas.drawPath(path,brush);
         }
 
         @Override
         public boolean onTouchEvent(MotionEvent event) {
-            x = event.getX();
-            y = event.getY();
-            if (event.getAction() == MotionEvent.ACTION_DOWN){
-                Accion = "Down";
-            }
-            if (event.getAction() == MotionEvent.ACTION_MOVE){
-                Accion = "Move";
+            float x = event.getX();
+            float y = event.getY();
+            switch (event.getAction()){
+                case MotionEvent.ACTION_DOWN:
+                    path.moveTo(x,y);
+                    break;
+                case MotionEvent.ACTION_MOVE:
+                    path.lineTo(x,y);
+                    break;
             }
             invalidate();
             return true;
