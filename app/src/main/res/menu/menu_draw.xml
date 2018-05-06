@@ -21,26 +21,32 @@
                     android:id="@+id/IdBrushOne"
                     android:title="@string/app_option_menu_brush_one_pt"
                     android:checked="true"
+                    android:onClick="onBrushItemClick"
                     />
                 <item
                     android:id="@+id/IdBrushTwo"
                     android:title="@string/app_option_menu_brush_two_pt"
+                    android:onClick="onBrushItemClick"
                     />
                 <item
                     android:id="@+id/IdBrushFour"
                     android:title="@string/app_option_menu_brush_four_pt"
+                    android:onClick="onBrushItemClick"
                     />
                 <item
                     android:id="@+id/IdBrushSix"
                     android:title="@string/app_option_menu_brush_six_pt"
+                    android:onClick="onBrushItemClick"
                     />
                 <item
                     android:id="@+id/IdBrushEight"
                     android:title="@string/app_option_menu_brush_eight_pt"
+                    android:onClick="onBrushItemClick"
                     />
                 <item
                     android:id="@+id/IdBrushTen"
                     android:title="@string/app_option_menu_brush_ten_pt"
+                    android:onClick="onBrushItemClick"
                     />
             </group>
         </menu>
@@ -107,26 +113,32 @@
                     android:id="@+id/IdDraftOne"
                     android:title="@string/app_option_menu_brush_one_pt"
                     android:checked="true"
+                    android:onClick="onDraftItemClick"
                     />
                 <item
                     android:id="@+id/IdDraftTwo"
                     android:title="@string/app_option_menu_brush_two_pt"
+                    android:onClick="onDraftItemClick"
                     />
                 <item
                     android:id="@+id/IdDraftFour"
                     android:title="@string/app_option_menu_brush_four_pt"
+                    android:onClick="onDraftItemClick"
                     />
                 <item
                     android:id="@+id/IdDrafthSix"
                     android:title="@string/app_option_menu_brush_six_pt"
+                    android:onClick="onDraftItemClick"
                     />
                 <item
                     android:id="@+id/IdDraftEight"
                     android:title="@string/app_option_menu_brush_eight_pt"
+                    android:onClick="onDraftItemClick"
                     />
                 <item
                     android:id="@+id/IdDraftTen"
                     android:title="@string/app_option_menu_brush_ten_pt"
+                    android:onClick="onDraftItemClick"
                     />
             </group>
         </menu>
