@@ -2,7 +2,23 @@
     <string name="app_name">Draw Screen</string>
     <string name="app_about">About...</string>
     <string name="app_new">New</string>
-    <string name="app_developer">Developers</string>
-    <string name="app_author">Paulina Rodiguez</string>
-    <string name="app_designer">Deini Resendiz</string>
+    <string name="app_application_about">\nDeveloped by: \nDeini Resendiz \nPaulina Rodiguez</string>
+    <string name="app_button_positive">Ok</string>
+    <string name="app_option_menu_brush">Brush</string>
+    <string name="app_option_menu_colors">Colors</string>
+    <string name="app_option_menu_draft">Draft</string>
+    <string name="app_option_menu_save">Save</string>
+    <string name="app_option_menu_color_black">Black</string>
+    <string name="app_option_menu_color_green">Green</string>
+    <string name="app_option_menu_color_blue">Blue</string>
+    <string name="app_option_menu_color_red">Red</string>
+    <string name="app_option_menu_color_text">Select color</string>
+    <string name="app_option_menu_brush_text">Select width</string>
+    <string name="app_option_menu_brush_one_pt">1 pt</string>
+    <string name="app_option_menu_brush_two_pt">2 pt</string>
+    <string name="app_option_menu_brush_four_pt">4 pt</string>
+    <string name="app_option_menu_brush_six_pt">6 pt</string>
+    <string name="app_option_menu_brush_eight_pt">8 pt</string>
+    <string name="app_option_menu_brush_ten_pt">10 pt</string>
+    <string name="app_option_menu_color_white">White</string>
 </resources>
