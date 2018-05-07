@@ -6,5 +6,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".DrawActivity">
+    <com.drawscreen.drawscreen.MyCanva
+        android:id="@+id/IdDraw"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </android.support.constraint.ConstraintLayout>
