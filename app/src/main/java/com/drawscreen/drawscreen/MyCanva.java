@@ -1,5 +1,6 @@
 package com.drawscreen.drawscreen;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -41,22 +42,27 @@ public class MyCanva extends View {
     //no tengo idea de como hacer que funcione este pincel demonios
     @Override
     protected void onDraw(Canvas canvas) {
-        //canvas.drawRGB(255,255,255);
+        canvas.drawRGB(255,255,255);
         canvas.drawBitmap(bitmap,0,0,mbrush);
         canvas.drawPath(path,brush);
     }
-
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         float x = event.getX();
         float y = event.getY();
         switch (event.getAction()){
             case MotionEvent.ACTION_DOWN:
-                brush.reset();
+                //brush.reset();
                 path.moveTo(x,y);
                 break;
             case MotionEvent.ACTION_MOVE:
                 path.lineTo(x,y);
+                break;
+            case MotionEvent.ACTION_UP:
+                path.lineTo(x, y);
+                canvas.drawPath(path, brush);
+                path.reset();
                 break;
         }
         invalidate();
@@ -96,5 +102,12 @@ public class MyCanva extends View {
     public void brushReset(){
         sizeBrush(sizeBrush);
         colors(colorBrush);
+    }
+    public Bitmap getBitmap() {
+        this.setDrawingCacheEnabled(true);
+        this.buildDrawingCache();
+        Bitmap bmp = Bitmap.createBitmap(this.getDrawingCache());
+        this.setDrawingCacheEnabled(false);
+        return bmp;
     }
 }
