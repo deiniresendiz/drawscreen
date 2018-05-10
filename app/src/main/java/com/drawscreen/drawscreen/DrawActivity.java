@@ -15,7 +15,9 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 
 public class DrawActivity extends AppCompatActivity {
     private MyCanva myCanvas ;
@@ -117,29 +119,58 @@ public class DrawActivity extends AppCompatActivity {
         }
         item.setChecked(true);
     }
-    private void saveDraw(){
-        File path = Environment.getExternalStorageDirectory();
-        File folder = new File(path.getPath() + Environment.DIRECTORY_MUSIC);
-        File file = new File(folder,"img.png");
-        FileOutputStream utputStream=null;
-        Toast.makeText(this,"1",Toast.LENGTH_SHORT).show();
+
+    private void saveDraw() {
+        int x,y;
+        String  b = "";
+        File sdCard = Environment.getExternalStorageDirectory();
+        b = String.valueOf(sdCard.getAbsolutePath()+"/"+Environment.DIRECTORY_PICTURES+"/myDraw");
+        File folder = new File(b);
+
+        Toast.makeText(this,b,Toast.LENGTH_SHORT).show();
+        boolean success = false;
+        if (!folder.exists()) {
+            success = folder.mkdirs();
+        }
+
+        File file = new File(folder, "drawing.png");
+
+        if (!file.exists()) {
+            try {
+                success = file.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        FileOutputStream ostream = null;
         try {
-            Toast.makeText(this,"2",Toast.LENGTH_SHORT).show();
-            utputStream = new FileOutputStream(file);
-            Toast.makeText(this,"3",Toast.LENGTH_SHORT).show();
-            Bitmap bitmap = myCanvas.getBitmap();
-            Toast.makeText(this,"4",Toast.LENGTH_SHORT).show();
-            Bitmap save = Bitmap.createBitmap(320,480, Bitmap.Config.ARGB_8888);
+            ostream = new FileOutputStream(file);
+
+            Bitmap well = myCanvas.getBitmap();
+            Bitmap save = Bitmap.createBitmap(320, 480,
+                    Bitmap.Config.ARGB_8888);
             Paint paint = new Paint();
             paint.setColor(Color.WHITE);
             Canvas now = new Canvas(save);
+            now.drawRect(new Rect(0, 0, 320, 480), paint);
+            now.drawBitmap(well,
+                    new Rect(0, 0, well.getWidth(), well.getHeight()),
+                    new Rect(0, 0, 320, 480), null);
 
-            now.drawRect(new Rect(0,0,320,480),paint);
-            now.drawBitmap(bitmap,new Rect(0,0,bitmap.getWidth(),bitmap.getHeight()),new Rect(0,0,320,480),null);
-            save.compress(Bitmap.CompressFormat.PNG,100,utputStream);
-            Toast.makeText(this,String.valueOf(file.getPath()),Toast.LENGTH_SHORT).show();
-        }catch (Exception e){
+            if (save == null) {
+            }
+            save.compress(Bitmap.CompressFormat.PNG, 100, ostream);
+            Toast.makeText(this, "File saved", Toast.LENGTH_SHORT).show();
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+            Toast.makeText(this, "Null error",
+                    Toast.LENGTH_SHORT).show();
+        }
 
+        catch (FileNotFoundException e) {
+            e.printStackTrace();
+            Toast.makeText(this, "File error", Toast.LENGTH_SHORT).show();
         }
     }
 }
