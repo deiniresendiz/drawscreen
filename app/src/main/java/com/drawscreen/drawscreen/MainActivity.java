@@ -9,13 +9,28 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 public class MainActivity extends AppCompatActivity {
-
+    private ListView lvDrwas;
+    private FileDraw fileDraw;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        lvDrwas = (ListView)findViewById(R.id.lvDraws);
+        fileDraw = new FileDraw();
+        ArrayAdapter <String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,fileDraw.getDraws());
+        lvDrwas.setAdapter(adapter);
+        lvDrwas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                runDraw(String.valueOf(lvDrwas.getItemAtPosition(position)));
+            }
+        });
     }
 
     @Override
@@ -54,4 +69,10 @@ public class MainActivity extends AppCompatActivity {
         });
         builder.show();
     }
+    private void runDraw(String draw){
+        Intent intent = new Intent(this,DrawActivity.class);
+        intent.putExtra("draw",draw);
+        startActivity(intent);
+    }
+
 }

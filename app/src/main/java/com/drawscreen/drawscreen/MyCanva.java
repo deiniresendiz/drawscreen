@@ -13,12 +13,12 @@ import android.view.View;
 
 
 public class MyCanva extends View {
-    public Paint brush;
-    public Paint mbrush;
-    public Path path;
+    private Paint brush, mbrush;
+    private Path path;
     private Bitmap bitmap;
     private int sizeBrush, colorBrush;
     private Canvas canvas;
+    public int y,x;
     public MyCanva(Context context, AttributeSet attributeSet) {
         super(context,attributeSet);
         path = new Path();
@@ -39,9 +39,11 @@ public class MyCanva extends View {
         bitmap = Bitmap.createBitmap(w,h,Bitmap.Config.ARGB_8888);
         canvas = new Canvas(bitmap);
     }
-    //no tengo idea de como hacer que funcione este pincel demonios
+    //no tengo idea de como hacer que funcione este pincel
     @Override
     protected void onDraw(Canvas canvas) {
+        x = canvas.getWidth();
+        y=canvas.getHeight();
         canvas.drawRGB(255,255,255);
         canvas.drawBitmap(bitmap,0,0,mbrush);
         canvas.drawPath(path,brush);
@@ -49,18 +51,18 @@ public class MyCanva extends View {
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        float x = event.getX();
-        float y = event.getY();
+        float px = event.getX();
+        float py = event.getY();
         switch (event.getAction()){
             case MotionEvent.ACTION_DOWN:
                 //brush.reset();
-                path.moveTo(x,y);
+                path.moveTo(px,py);
                 break;
             case MotionEvent.ACTION_MOVE:
-                path.lineTo(x,y);
+                path.lineTo(px,py);
                 break;
             case MotionEvent.ACTION_UP:
-                path.lineTo(x, y);
+                path.lineTo(px, py);
                 canvas.drawPath(path, brush);
                 path.reset();
                 break;
@@ -68,28 +70,10 @@ public class MyCanva extends View {
         invalidate();
         return true;
     }
-    //cambios de colores
+    //cambio de colore
     public void colors(int color){
         colorBrush = color;
-        switch (color){
-            case 0:
-                brush.setColor(Color.BLACK);
-                break;
-            case 1:
-                brush.setColor(Color.GREEN);
-                break;
-            case 2:
-                brush.setColor(Color.BLUE);
-                break;
-            case 3:
-                brush.setColor(Color.RED);
-                break;
-            case 4:
-                brush.setColor(Color.WHITE);
-                break;
-            default:
-                brush.setColor(Color.BLACK);
-        }
+        brush.setColor(color);
     }
     public void sizeBrush(int size){
         sizeBrush = size;
@@ -97,7 +81,7 @@ public class MyCanva extends View {
     }
     public void draft(int size){
         brush.setColor(Color.WHITE);
-        brush.setStrokeWidth(size*2);
+        brush.setStrokeWidth(size*4);
     }
     public void brushReset(){
         sizeBrush(sizeBrush);
@@ -110,4 +94,5 @@ public class MyCanva extends View {
         this.setDrawingCacheEnabled(false);
         return bmp;
     }
+
 }

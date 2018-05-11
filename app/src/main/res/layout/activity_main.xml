@@ -7,7 +7,7 @@
     tools:context=".MainActivity">
 
     <ListView
-        android:id="@+id/lvImages"
+        android:id="@+id/lvDraws"
         android:layout_width="368dp"
         android:layout_height="495dp"
         android:layout_marginBottom="8dp"
