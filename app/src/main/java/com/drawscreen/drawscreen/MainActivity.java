@@ -23,8 +23,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         lvDrwas = (ListView)findViewById(R.id.lvDraws);
         fileDraw = new FileDraw();
-        ArrayAdapter <String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,fileDraw.getDraws());
-        lvDrwas.setAdapter(adapter);
+        loadDraw();
         lvDrwas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -74,5 +73,14 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra("draw",draw);
         startActivity(intent);
     }
+    private void loadDraw(){
+        ArrayAdapter <String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,fileDraw.getDraws());
+        lvDrwas.setAdapter(adapter);
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loadDraw();
+    }
 }

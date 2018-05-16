@@ -7,6 +7,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -15,18 +16,18 @@ import android.view.View;
 public class MyCanva extends View {
     private Paint brush, mbrush;
     private Path path;
-    private Bitmap bitmap;
+    private Bitmap bitmap,img;
     private int sizeBrush, colorBrush;
     private Canvas canvas;
-    public int y,x;
-    public MyCanva(Context context, AttributeSet attributeSet) {
-        super(context,attributeSet);
+    public int x,y;
+    public MyCanva(Context context, @Nullable AttributeSet attrs) {
+        super(context, attrs);
         path = new Path();
         brush = new Paint();
         mbrush = new Paint(Paint.DITHER_FLAG);
         brush.setAntiAlias(true);
         brush.setDither(true);
-        colors(0);
+        colors(Color.BLACK);
         brush.setStyle(Paint.Style.STROKE);
         brush.setStrokeJoin(Paint.Join.ROUND);
         brush.setStrokeCap(Paint.Cap.ROUND);
@@ -35,16 +36,19 @@ public class MyCanva extends View {
 
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-        super.onSizeChanged(w, h, oldw, oldh);
+        super.onSizeChanged(0, 0, 0, 0);
         bitmap = Bitmap.createBitmap(w,h,Bitmap.Config.ARGB_8888);
         canvas = new Canvas(bitmap);
     }
     //no tengo idea de como hacer que funcione este pincel
     @Override
     protected void onDraw(Canvas canvas) {
-        x = canvas.getWidth();
+        super.onDraw(canvas);
+        x=canvas.getWidth();
         y=canvas.getHeight();
-        canvas.drawRGB(255,255,255);
+        if(img != null) {
+            canvas.drawBitmap(img,0,0,mbrush);
+        }
         canvas.drawBitmap(bitmap,0,0,mbrush);
         canvas.drawPath(path,brush);
     }
@@ -55,7 +59,6 @@ public class MyCanva extends View {
         float py = event.getY();
         switch (event.getAction()){
             case MotionEvent.ACTION_DOWN:
-                //brush.reset();
                 path.moveTo(px,py);
                 break;
             case MotionEvent.ACTION_MOVE:
@@ -94,5 +97,7 @@ public class MyCanva extends View {
         this.setDrawingCacheEnabled(false);
         return bmp;
     }
-
+    public void setBitmap(Bitmap img){
+        this.img = img;
+    }
 }

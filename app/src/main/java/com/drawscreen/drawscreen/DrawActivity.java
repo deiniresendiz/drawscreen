@@ -1,28 +1,35 @@
 package com.drawscreen.drawscreen;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.EditText;
 import android.widget.Toast;
+import java.util.regex.Pattern;
 
 
 public class DrawActivity extends AppCompatActivity {
     private MyCanva myCanvas ;
     private FileDraw fileDraw;
+    private boolean ban = false;
+    private String nameDraw = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_draw);
-        myCanvas = (MyCanva)findViewById(R.id.IdDraw);
-        fileDraw = new FileDraw();
         Bundle bundle = getIntent().getExtras();
+        fileDraw = new FileDraw();
+        myCanvas = (MyCanva)findViewById(R.id.IdCanva);
         if(bundle != null){
-            loadDraw(bundle.getString("draw"));
+            nameDraw = bundle.getString("draw");
+            loadDraw();
+            ban = true;
         }
     }
 
@@ -40,9 +47,13 @@ public class DrawActivity extends AppCompatActivity {
                 //reseteo del pincel a los valores anteriores
                 myCanvas.brushReset();
                 return true;
+            case R.id.IdColors:
+                //reseteo del pincel a los valores anteriores
+                myCanvas.brushReset();
+                return true;
             case R.id.IdSave:
                 //metodo que no funciona
-                saveDraw("ss");
+                save();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -119,14 +130,41 @@ public class DrawActivity extends AppCompatActivity {
     }
 
     private void saveDraw(String draw) {
-        if (fileDraw.saveDraw(myCanvas.getBitmap(),draw,(int)myCanvas.x,(int)myCanvas.y))
+        String minusculas = "[a-z]";
+        String letrasNumGuin = "^[a-z0-9[_]]*$";
+        if (Pattern.matches(minusculas,""+draw.toCharArray()[0])){
+            if(Pattern.matches(letrasNumGuin,draw)){
+
+            }
+            Toast.makeText(this,"No se Admiten caracteres especiales y mayusculas",Toast.LENGTH_SHORT).show();
+        }else
+            Toast.makeText(this,"Se debe iniciar con una letra minuscula",Toast.LENGTH_SHORT).show();
+        /*if (fileDraw.saveDraw(myCanvas.getBitmap(),draw,(int)myCanvas.x,(int)myCanvas.y,ban))
             Toast.makeText(this,"Se guardo Correctamente",Toast.LENGTH_SHORT).show();
         else
-            Toast.makeText(this,"Error al guardar",Toast.LENGTH_LONG).show();
+            Toast.makeText(this,"No se guardo",Toast.LENGTH_LONG).show();*/
     }
-    public void loadDraw(String draw){
-        Bitmap img = BitmapFactory.decodeFile(fileDraw.folder+"/"+draw);
-        Log.d("", "loadDraw: " + fileDraw.folder+"/"+draw);
+    public void loadDraw(){
+        Bitmap img = BitmapFactory.decodeFile(fileDraw.folder+"/"+nameDraw);
+        myCanvas.setBitmap(img);
+    }
+    private void save(){
+        if (ban){
+            saveDraw(nameDraw);
+        }else{
+            final EditText editText = new EditText(DrawActivity.this);
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle(getString(R.string.app_name_draw));
+            builder.setView(editText);
+            builder.setPositiveButton(getString(R.string.app_button_positive), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    saveDraw(String.valueOf(editText.getText()));
+                }
+            });
+            builder.setCancelable(false);
+            builder.show();
+        }
+    }
 
-    }
 }

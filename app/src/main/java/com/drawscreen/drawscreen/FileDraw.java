@@ -20,13 +20,16 @@ public class FileDraw {
         folderUrl = new File(folder);
     }
 
-    public boolean saveDraw(Bitmap well,String draw,int x,int y) {
+    public boolean saveDraw(Bitmap well,String draw,int x,int y,boolean ban) {
         boolean success = false;
         if (!folderUrl.exists()) {
             success = folderUrl.mkdirs();
         }
 
-        File file = new File(folderUrl, draw +".png");
+        File file = new File(folderUrl, draw);
+        if (ban){
+            file.delete();
+        }
 
         if (!file.exists()) {
             try {
@@ -62,8 +65,8 @@ public class FileDraw {
     public String[] getDraws(){
         return folderUrl.list();
     }
-    public boolean exitDraw(String draw){
-        File d = new File(folder+"/"+draw+".png");
-        return  d.exists();
+    public String exisDraw(String draw){
+        File d = new File(folderUrl,draw);
+        return  ""+d.exists();
     }
 }

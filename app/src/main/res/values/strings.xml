@@ -21,4 +21,6 @@
     <string name="app_option_menu_brush_eight_pt">8 pt</string>
     <string name="app_option_menu_brush_ten_pt">10 pt</string>
     <string name="app_option_menu_color_white">White</string>
+    <string name="app_name_draw">Name draw</string>
+    <string name="app_button_cancelable">canceler</string>
 </resources>
