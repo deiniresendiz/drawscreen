@@ -170,7 +170,7 @@ public class DrawActivity extends AppCompatActivity {
                     saveDraw(String.valueOf(editText.getText()));
                 }
             });
-            builder.setCancelable(false);
+            builder.setCancelable(true);
             builder.show();
         }
     }
