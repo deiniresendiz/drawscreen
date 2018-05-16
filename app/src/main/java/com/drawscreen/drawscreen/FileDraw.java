@@ -25,7 +25,8 @@ public class FileDraw {
         if (!folderUrl.exists()) {
             success = folderUrl.mkdirs();
         }
-
+        if(!ban)
+            draw += ".png";
         File file = new File(folderUrl, draw);
         if (ban){
             file.delete();
@@ -65,8 +66,8 @@ public class FileDraw {
     public String[] getDraws(){
         return folderUrl.list();
     }
-    public String exisDraw(String draw){
-        File d = new File(folderUrl,draw);
-        return  ""+d.exists();
+    public boolean exisDraw(String draw){
+        File d = new File(folder+"/"+draw+".png");
+        return  d.exists();
     }
 }

@@ -134,15 +134,23 @@ public class DrawActivity extends AppCompatActivity {
         String letrasNumGuin = "^[a-z0-9[_]]*$";
         if (Pattern.matches(minusculas,""+draw.toCharArray()[0])){
             if(Pattern.matches(letrasNumGuin,draw)){
-
-            }
-            Toast.makeText(this,"No se Admiten caracteres especiales y mayusculas",Toast.LENGTH_SHORT).show();
+                if(!fileDraw.exisDraw(draw)){
+                    saveDrawFile(draw);
+                }else
+                    Toast.makeText(this,"Ya existe un archivo con el mismo nombre",Toast.LENGTH_LONG).show();
+            }else
+                Toast.makeText(this,"No se Admiten caracteres especiales y mayusculas",Toast.LENGTH_SHORT).show();
         }else
             Toast.makeText(this,"Se debe iniciar con una letra minuscula",Toast.LENGTH_SHORT).show();
-        /*if (fileDraw.saveDraw(myCanvas.getBitmap(),draw,(int)myCanvas.x,(int)myCanvas.y,ban))
+        save();
+
+    }
+    private void saveDrawFile(String draw){
+        if (fileDraw.saveDraw(myCanvas.getBitmap(),draw,(int)myCanvas.x,(int)myCanvas.y,ban))
             Toast.makeText(this,"Se guardo Correctamente",Toast.LENGTH_SHORT).show();
         else
-            Toast.makeText(this,"No se guardo",Toast.LENGTH_LONG).show();*/
+            Toast.makeText(this,"No se guardo",Toast.LENGTH_LONG).show();
+        finish();
     }
     public void loadDraw(){
         Bitmap img = BitmapFactory.decodeFile(fileDraw.folder+"/"+nameDraw);
@@ -150,7 +158,7 @@ public class DrawActivity extends AppCompatActivity {
     }
     private void save(){
         if (ban){
-            saveDraw(nameDraw);
+            saveDrawFile(nameDraw);
         }else{
             final EditText editText = new EditText(DrawActivity.this);
             AlertDialog.Builder builder = new AlertDialog.Builder(this);

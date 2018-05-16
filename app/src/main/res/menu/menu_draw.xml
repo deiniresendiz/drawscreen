@@ -97,7 +97,7 @@
     </item>
     <item
         android:id="@+id/IdDraft"
-        android:icon="@drawable/ic_panorama_fish_eye"
+        android:icon="@drawable/borrador"
         android:title="@string/app_option_menu_draft"
         app:showAsAction="always">
         <menu>
