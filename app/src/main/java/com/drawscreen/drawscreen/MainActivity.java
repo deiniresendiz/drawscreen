@@ -27,8 +27,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         lvDrwas = (ListView)findViewById(R.id.lvDraws);
-        fileDraw = new FileDraw();
-        checkPermission();
     }
 
     @Override
@@ -73,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
     private void loadDraw(){
+        fileDraw = new FileDraw();
         ArrayAdapter <String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,fileDraw.getDraws());
         lvDrwas.setAdapter(adapter);
         lvDrwas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -86,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        loadDraw();
+        checkPermission();
     }
 
     @Override
@@ -129,5 +128,11 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return;
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        checkPermission();
     }
 }
