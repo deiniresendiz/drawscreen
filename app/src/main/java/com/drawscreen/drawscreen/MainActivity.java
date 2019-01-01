@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        checkPermission();
+        //checkPermission();
     }
 
     @Override
@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
         if(REQUEST_CODE_ASK_PERMISSIONS == requestCode) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 Toast.makeText(this, "OK Permissions granted ! :-) " + Build.VERSION.SDK_INT, Toast.LENGTH_LONG).show();
-                loadDraw();
+                //loadDraw();
             } else {
                 Toast.makeText(this, "Permissions are not granted ! :-( " + Build.VERSION.SDK_INT, Toast.LENGTH_LONG).show();
             }
@@ -121,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
             }else if (hasWriteContactsPermission == PackageManager.PERMISSION_GRANTED){
 
                 Toast.makeText(this, "The permissions are already granted ", Toast.LENGTH_LONG).show();
-                loadDraw();
+                //loadDraw();
 
             }
 
@@ -133,6 +133,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        checkPermission();
+        //checkPermission();
     }
 }
